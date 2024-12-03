@@ -3,15 +3,15 @@ import Map, { Layer, Source } from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 
 export default function MapGL(props) {
+  const zoom = props?.zoom || 13;
   const [viewport, setViewport] = React.useState({
     latitude: 10.736925364913548,
     longitude: 106.72630256442386,
-    zoom: 13,
     width: "100vw",
     height: "100vh",
   });
 
-  
+  const handleZoom = props.handleZoom;
 
   const handleViewportChange = (viewport) => {
     setViewport({
@@ -20,17 +20,12 @@ export default function MapGL(props) {
       longitude: viewport.viewState.longitude,
     });
   };
-  const handleZoom = (viewport) => {
-    setViewport({
-      ...viewport,
-      zoom: viewport.viewState.zoom,
-    });
-  };
 
   return (
     <Map
       mapLib={mapboxgl}
       {...viewport}
+      zoom={zoom}
       onDrag={handleViewportChange}
       onZoom={handleZoom}
       mapStyle={"mapbox://styles/mapbox/streets-v11"}

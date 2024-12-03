@@ -5,6 +5,7 @@ import logo from "../assets/images/logo.png";
 
 function App() {
   const [layerOpacity, setLayerOpacity] = React.useState(0.5);
+  const [zoom, setZoom] = React.useState(13);
   const urlLayer = "/quan72023/12/3262/2170.png";
   const imageCoordinates = [
     [106.74319508517412 - 0.043, 10.703971250968305 + 0.043], // top-left
@@ -12,6 +13,10 @@ function App() {
     [106.74319508517412 + 0.043, 10.703971250968305 - 0.043], // bottom-right
     [106.74319508517412 - 0.043, 10.703971250968305 - 0.043], // bottom-left
   ];
+
+  const handleZoom = (e) => {
+    setZoom(e.viewState.zoom);
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -40,7 +45,17 @@ function App() {
           onChange={(e) => setLayerOpacity(e.target.value)}
         />
       </div>
-      <MapGL layerOpacity={layerOpacity} urlLayer={urlLayer} imageCoordinates={imageCoordinates}/>
+      <div className="button-zoom">
+        <button onClick={() => setZoom(zoom + 1)}>+</button>
+        <button onClick={() => setZoom(zoom - 1)}>-</button>
+      </div>
+      <MapGL
+        layerOpacity={layerOpacity}
+        urlLayer={urlLayer}
+        imageCoordinates={imageCoordinates}
+        zoom={zoom}
+        handleZoom={handleZoom}
+      />
     </div>
   );
 }
